@@ -46,7 +46,7 @@ function MyStack() {
 					options={
 						({ route }) => (
 							{
-								title: route.params.title ? route.params.title : 'Details'
+								title: 'title'
 							}
 						)
 					}

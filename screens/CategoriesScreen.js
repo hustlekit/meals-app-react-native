@@ -3,21 +3,18 @@ import { Text, View, StyleSheet, Button, FlatList, ListRenderItem, TouchableOpac
 
 import { CATEGORIES } from "../data/dummy-data";
 
-import Category from "../models/Category";
+import CategoryGridTile from "../components/CategoryGridTile";
 
 const CategoriesScreen = (props) => {
 	const renderGridItem = ({ item }) => {
 		return (
-			<TouchableOpacity
-				style={ styles.gridItem }
-				onPress={ () => {
+			<CategoryGridTile
+				title={ item.title }
+				color={ item.color }
+				onSelect={ () => {
 					props.navigation.navigate('CategoryMeals', { title: item.title, categoryId: item.id });
 				} }
-			>
-				<View>
-					<Text>{ item.title }</Text>
-				</View>
-			</TouchableOpacity>
+			/>
 		)
 	}
 	
@@ -35,11 +32,6 @@ const styles = StyleSheet.create({
 		flex: 1,
 		justifyContent: 'center',
 		alignItems: 'center'
-	},
-	gridItem: {
-		flex: 1,
-		margin: 15,
-		height: 150
 	}
 });
 

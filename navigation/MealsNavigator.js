@@ -11,31 +11,49 @@ import MealDetailsScreen from "../screens/MealDetailsScreen";
 const Stack = createNativeStackNavigator();
 
 function MyStack() {
-    return (
-        <NavigationContainer>
-            <Stack.Navigator initialRouteName={ 'Categories' }>
-                <Stack.Screen
-                    name={ 'Categories' }
-                    component={ CategoriesScreen }
-                    options={ {
-                        title: 'Meal Categories',
-                        headerStyle: {
-                            backgroundColor: Platform.OS === 'android' ? Colors.primaryColor : ''
-                        },
-                        headerTintColor: Platform.OS === 'android' ? 'white' : Colors.primaryColor
-                    } }
-                />
-                <Stack.Screen
-                    name={ 'CategoryMeals' }
-                    component={ CategoryMealsScreen }
-                />
-                <Stack.Screen
-                    name={ 'MealDetails' }
-                    component={ MealDetailsScreen }
-                />
-            </Stack.Navigator>
-        </NavigationContainer>
-    )
+	return (
+		<NavigationContainer>
+			<Stack.Navigator
+				initialRouteName={ 'Categories' }
+				screenOptions={ {
+					headerStyle: {
+						backgroundColor: Platform.OS === 'android' ? Colors.primaryColor : ''
+					},
+					headerTintColor: Platform.OS === 'android' ? 'white' : Colors.primaryColor
+				} }
+			>
+				<Stack.Screen
+					name={ 'Categories' }
+					component={ CategoriesScreen }
+					options={ {
+						title: 'Meal Categories',
+					} }
+				/>
+				<Stack.Screen
+					name={ 'CategoryMeals' }
+					component={ CategoryMealsScreen }
+					options={
+						({ route }) => (
+							{
+								title: route.params.title
+							}
+						)
+					}
+				/>
+				<Stack.Screen
+					name={ 'MealDetails' }
+					component={ MealDetailsScreen }
+					options={
+						({ route }) => (
+							{
+								title: route.params.title ? route.params.title : 'Details'
+							}
+						)
+					}
+				/>
+			</Stack.Navigator>
+		</NavigationContainer>
+	)
 }
 
 export default MyStack;

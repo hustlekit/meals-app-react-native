@@ -1,11 +1,12 @@
 import React from 'react';
-import { Text, View, StyleSheet, Button } from 'react-native';
+import { Text, View, StyleSheet, Button, Platform } from 'react-native';
 
-import Category from "../models/Category";
 import { CATEGORIES } from "../data/dummy-data";
-import categoriesScreen from "./CategoriesScreen";
 
-const CategoryMealsScreen = props => {
+const CategoryMealsScreen = (props) => {
+    const catId = props.route.params.categoryId;
+    const selectedCategory = CATEGORIES.find(cat => cat.id === catId);
+    
     return (
         <View style={ styles.root }>
             <Text>The Category Meals Screen!</Text>

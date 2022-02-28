@@ -1,7 +1,15 @@
-import React from 'react';
+import React, { useLayoutEffect } from 'react';
 import { Text, View, StyleSheet } from 'react-native';
 
+import MealDetailsHeaderButtons from "../components/MealDetailsHeaderButtons";
+
 const MealDetailsScreen = props => {
+    useLayoutEffect(() => {
+        props.navigation.setOptions({
+            headerRight: MealDetailsHeaderButtons
+        })
+    }, [props.navigation]);
+    
     const item = props.route.params.item;
     
     return (

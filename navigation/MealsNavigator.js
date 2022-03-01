@@ -13,8 +13,9 @@ import CategoryMealsScreen from "../screens/CategoryMealsScreen";
 import MealDetailsScreen from "../screens/MealDetailsScreen";
 import FavoritesScreen from "../screens/FavoritesScreen";
 
-const Stack = createNativeStackNavigator();
 const Tab = Platform.OS === 'android' ? createMaterialBottomTabNavigator() : createBottomTabNavigator();
+const MealsStack = createNativeStackNavigator();
+const FavoritesStack = createNativeStackNavigator();
 
 let TabNavigator;
 
@@ -38,7 +39,7 @@ if ( Platform.OS === 'ios' ) {
 				/>
 				<Tab.Screen
 					name={ 'Favorites' }
-					component={ FavoritesScreen }
+					component={ FavoritesStackNavigator }
 					options={ {
 						tabBarIcon: (tabInfo) => {
 							return <Ionicons name={ 'ios-star' } size={ 25 } color={ tabInfo.color }/>
@@ -54,9 +55,9 @@ if ( Platform.OS === 'ios' ) {
 			<Tab.Navigator
 				activeColor={ 'white' }
 				shifting={ true }
-				barStyle={{
+				barStyle={ {
 					backgroundColor: Colors.primaryColor
-				}}
+				} }
 			>
 				<Tab.Screen
 					name={ 'Meals' }
@@ -70,7 +71,7 @@ if ( Platform.OS === 'ios' ) {
 				/>
 				<Tab.Screen
 					name={ 'Favorites' }
-					component={ FavoritesScreen }
+					component={ FavoritesStackNavigator }
 					options={ {
 						tabBarIcon: (tabInfo) => {
 							return <Ionicons name={ 'ios-star' } size={ 25 } color={ tabInfo.color }/>
@@ -86,33 +87,14 @@ if ( Platform.OS === 'ios' ) {
 function MealsTabNavigator() {
 	return (
 		<NavigationContainer>
-			<TabNavigator>
-				<Tab.Screen
-					name={ 'Meals' }
-					component={ MealsStackNavigator }
-					options={ {
-						tabBarIcon: (tabInfo) => {
-							return <Ionicons name={ 'ios-restaurant' } size={ 25 } color={ tabInfo.color }/>
-						}
-					} }
-				/>
-				<Tab.Screen
-					name={ 'Favorites' }
-					component={ FavoritesScreen }
-					options={ {
-						tabBarIcon: (tabInfo) => {
-							return <Ionicons name={ 'ios-star' } size={ 25 } color={ tabInfo.color }/>
-						}
-					} }
-				/>
-			</TabNavigator>
+			<TabNavigator/>
 		</NavigationContainer>
 	)
 }
 
 function MealsStackNavigator() {
 	return (
-		<Stack.Navigator
+		<MealsStack.Navigator
 			initialRouteName={ 'Categories' }
 			screenOptions={ {
 				headerStyle: {
@@ -122,14 +104,14 @@ function MealsStackNavigator() {
 				headerTitleAlign: 'center'
 			} }
 		>
-			<Stack.Screen
+			<MealsStack.Screen
 				name={ 'Categories' }
 				component={ CategoriesScreen }
 				options={ {
 					title: 'Meal Categories',
 				} }
 			/>
-			<Stack.Screen
+			<MealsStack.Screen
 				name={ 'CategoryMeals' }
 				component={ CategoryMealsScreen }
 				options={
@@ -140,7 +122,7 @@ function MealsStackNavigator() {
 					)
 				}
 			/>
-			<Stack.Screen
+			<MealsStack.Screen
 				name={ 'MealDetails' }
 				component={ MealDetailsScreen }
 				options={
@@ -151,7 +133,41 @@ function MealsStackNavigator() {
 					)
 				}
 			/>
-		</Stack.Navigator>
+		</MealsStack.Navigator>
+	)
+}
+
+function FavoritesStackNavigator() {
+	return (
+		<FavoritesStack.Navigator
+			initialRouteName={ 'Favorites' }
+			screenOptions={ {
+				headerStyle: {
+					backgroundColor: Platform.OS === 'android' ? Colors.secondaryColor : ''
+				},
+				headerTintColor: Platform.OS === 'android' ? 'white' : Colors.secondaryColor,
+				headerTitleAlign: 'center'
+			} }
+		>
+			<FavoritesStack.Screen
+				name={ 'FavoritesStackScreen' }
+				component={ FavoritesScreen }
+				options={ {
+					title: 'Favorites'
+				} }
+			/>
+			<FavoritesStack.Screen
+				name={ 'MealDetails' }
+				component={ MealDetailsScreen }
+				options={
+					({ route }) => (
+						{
+							title: route.params.title
+						}
+					)
+				}
+			/>
+		</FavoritesStack.Navigator>
 	)
 }
 

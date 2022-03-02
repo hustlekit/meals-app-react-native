@@ -1,12 +1,12 @@
 import React, { useLayoutEffect } from 'react';
 import { Text, View, StyleSheet } from 'react-native';
 
-import MealDetailsHeaderButtons from "../components/MealDetailsHeaderButtons";
+import HeaderButtonsRight from "../components/HeaderButtonsRight";
 
 const MealDetailsScreen = props => {
     useLayoutEffect(() => {
         props.navigation.setOptions({
-            headerRight: MealDetailsHeaderButtons
+            headerRight: HeaderButtonsRight
         })
     }, [props.navigation]);
     

@@ -1,7 +1,15 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Text, View, StyleSheet } from 'react-native';
 
-const FiltersScreen = () => {
+import HeaderButtonsLeft from "../components/HeaderButtonsLeft";
+
+const FiltersScreen = props => {
+    useEffect(() => {
+        props.navigation.setOptions({
+            headerLeft: HeaderButtonsLeft
+        })
+    })
+    
     return (
         <View style={ styles.root }>
             <Text>The Filters Screen!</Text>

@@ -1,11 +1,18 @@
-import React from 'react';
+import React, { useLayoutEffect } from 'react';
 import { Text, View, StyleSheet, Button, FlatList, ListRenderItem, TouchableOpacity } from 'react-native';
 
 import { CATEGORIES } from "../data/dummy-data";
 
 import CategoryGridTile from "../components/CategoryGridTile";
+import HeaderButtonsLeft from "../components/HeaderButtonsLeft";
 
 const CategoriesScreen = (props) => {
+	useLayoutEffect(() => {
+		props.navigation.setOptions({
+			headerLeft: HeaderButtonsLeft
+		})
+	}, [props.navigation]);
+	
 	const renderGridItem = ({ item }) => {
 		return (
 			<CategoryGridTile

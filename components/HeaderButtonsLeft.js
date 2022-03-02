@@ -2,15 +2,14 @@ import React from "react";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
 
 import HeaderButtonCustom from "./HeaderButtonCustom";
-import HeaderButtonStar from "./HeaderButtonStar";
+import HeaderButtonMenu from "./HeaderButtonMenu";
 
-
-const MealDetailsHeaderButtons = props => {
+const MealDetailsHeaderButtonsLeft = props => {
 	return (
 		<HeaderButtons HeaderButtonComponent={ HeaderButtonCustom }>
-			<HeaderButtonStar/>
+			<HeaderButtonMenu/>
 		</HeaderButtons>
 	)
 };
 
-export default MealDetailsHeaderButtons;
+export default MealDetailsHeaderButtonsLeft;

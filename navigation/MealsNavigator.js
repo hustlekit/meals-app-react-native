@@ -3,8 +3,9 @@ import { Platform } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { Ionicons } from "@expo/vector-icons";
 import { createMaterialBottomTabNavigator } from "@react-navigation/material-bottom-tabs";
+import { createDrawerNavigator } from "@react-navigation/drawer";
+import { Ionicons } from "@expo/vector-icons";
 
 import Colors from "../constants/Colors";
 
@@ -12,23 +13,45 @@ import CategoriesScreen from "../screens/CategoriesScreen";
 import CategoryMealsScreen from "../screens/CategoryMealsScreen";
 import MealDetailsScreen from "../screens/MealDetailsScreen";
 import FavoritesScreen from "../screens/FavoritesScreen";
+import FiltersScreen from "../screens/FiltersScreen";
 
-const Tab = Platform.OS === 'android' ? createMaterialBottomTabNavigator() : createBottomTabNavigator();
+const DrawerNavigator = createDrawerNavigator();
+const BottomTab = Platform.OS === 'android' ? createMaterialBottomTabNavigator() : createBottomTabNavigator();
 const MealsStack = createNativeStackNavigator();
 const FavoritesStack = createNativeStackNavigator();
+const FiltersStack = createNativeStackNavigator();
 
-let TabNavigator;
+function MainDrawerNavigator() {
+	return (
+		<DrawerNavigator.Navigator
+			screenOptions={ {
+				headerShown: false
+			} }
+		>
+			<DrawerNavigator.Screen
+				name={ 'FavoritesDrawer' }
+				component={ BottomTabNavigator }
+			/>
+			<DrawerNavigator.Screen
+				name={ 'Filters' }
+				component={ FiltersStackNavigator }
+			/>
+		</DrawerNavigator.Navigator>
+	)
+}
+
+let BottomTabNavigator;
 
 if ( Platform.OS === 'ios' ) {
-	TabNavigator = () => {
+	BottomTabNavigator = () => {
 		return (
-			<Tab.Navigator
+			<BottomTab.Navigator
 				screenOptions={ {
 					headerShown: false,
 					tabBarActiveTintColor: Colors.secondaryColor
 				} }
 			>
-				<Tab.Screen
+				<BottomTab.Screen
 					name={ 'Meals' }
 					component={ MealsStackNavigator }
 					options={ {
@@ -37,7 +60,7 @@ if ( Platform.OS === 'ios' ) {
 						}
 					} }
 				/>
-				<Tab.Screen
+				<BottomTab.Screen
 					name={ 'Favorites' }
 					component={ FavoritesStackNavigator }
 					options={ {
@@ -46,20 +69,20 @@ if ( Platform.OS === 'ios' ) {
 						}
 					} }
 				/>
-			</Tab.Navigator>
+			</BottomTab.Navigator>
 		)
 	}
 } else if ( Platform.OS === 'android' ) {
-	TabNavigator = () => {
+	BottomTabNavigator = () => {
 		return (
-			<Tab.Navigator
+			<BottomTab.Navigator
 				activeColor={ 'white' }
 				shifting={ true }
 				barStyle={ {
 					backgroundColor: Colors.primaryColor
 				} }
 			>
-				<Tab.Screen
+				<BottomTab.Screen
 					name={ 'Meals' }
 					component={ MealsStackNavigator }
 					options={ {
@@ -69,7 +92,7 @@ if ( Platform.OS === 'ios' ) {
 						tabBarColor: Colors.primaryColor
 					} }
 				/>
-				<Tab.Screen
+				<BottomTab.Screen
 					name={ 'Favorites' }
 					component={ FavoritesStackNavigator }
 					options={ {
@@ -79,17 +102,9 @@ if ( Platform.OS === 'ios' ) {
 						tabBarColor: Colors.secondaryColor
 					} }
 				/>
-			</Tab.Navigator>
+			</BottomTab.Navigator>
 		)
 	}
-}
-
-function MealsTabNavigator() {
-	return (
-		<NavigationContainer>
-			<TabNavigator/>
-		</NavigationContainer>
-	)
 }
 
 function MealsStackNavigator() {
@@ -98,7 +113,7 @@ function MealsStackNavigator() {
 			initialRouteName={ 'Categories' }
 			screenOptions={ {
 				headerStyle: {
-					backgroundColor: Platform.OS === 'android' ? Colors.primaryColor : ''
+					backgroundColor: Platform.OS === 'android' ? Colors.primaryColor : '',
 				},
 				headerTintColor: Platform.OS === 'android' ? 'white' : Colors.primaryColor,
 				headerTitleAlign: 'center'
@@ -108,7 +123,7 @@ function MealsStackNavigator() {
 				name={ 'Categories' }
 				component={ CategoriesScreen }
 				options={ {
-					title: 'Meal Categories',
+					title: 'Meal Categories'
 				} }
 			/>
 			<MealsStack.Screen
@@ -171,4 +186,35 @@ function FavoritesStackNavigator() {
 	)
 }
 
-export default MealsTabNavigator;
+function FiltersStackNavigator() {
+	return (
+		<FavoritesStack.Navigator
+			initialRouteName={ 'FiltersScreen' }
+			screenOptions={ {
+				headerStyle: {
+					backgroundColor: Platform.OS === 'android' ? Colors.secondaryColor : ''
+				},
+				headerTintColor: Platform.OS === 'android' ? 'white' : Colors.secondaryColor,
+				headerTitleAlign: 'center'
+			} }
+		>
+			<FavoritesStack.Screen
+				name={ 'FiltersScreen' }
+				component={ FiltersScreen }
+				options={ {
+					title: 'Filters'
+				} }
+			/>
+		</FavoritesStack.Navigator>
+	)
+}
+
+function MealsNavigator() {
+	return (
+		<NavigationContainer>
+			<MainDrawerNavigator/>
+		</NavigationContainer>
+	)
+}
+
+export default MealsNavigator;

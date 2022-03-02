@@ -1,5 +1,5 @@
 import React from "react";
-import { Platform } from "react-native";
+import { Platform, Text } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
@@ -25,16 +25,26 @@ function MainDrawerNavigator() {
 	return (
 		<DrawerNavigator.Navigator
 			screenOptions={ {
-				headerShown: false
+				headerShown: false,
+				drawerActiveTintColor: Colors.secondaryColor,
+				drawerLabelStyle: {
+					fontFamily: 'open-sans-bold'
+				}
 			} }
 		>
 			<DrawerNavigator.Screen
-				name={ 'FavoritesDrawer' }
+				name={ 'Meals' }
 				component={ BottomTabNavigator }
+				options={ {
+					drawerLabel: 'Meals'
+				} }
 			/>
 			<DrawerNavigator.Screen
 				name={ 'Filters' }
 				component={ FiltersStackNavigator }
+				options={ {
+					drawerLabel: 'Filters'
+				} }
 			/>
 		</DrawerNavigator.Navigator>
 	)
@@ -46,27 +56,35 @@ if ( Platform.OS === 'ios' ) {
 	BottomTabNavigator = () => {
 		return (
 			<BottomTab.Navigator
-				screenOptions={ {
-					headerShown: false,
-					tabBarActiveTintColor: Colors.secondaryColor
-				} }
+				activeColor={ 'white' }
+				shifting={ true }
 			>
 				<BottomTab.Screen
-					name={ 'Meals' }
+					name={ 'MealsTab' }
 					component={ MealsStackNavigator }
+					title={ 'Meals' }
 					options={ {
 						tabBarIcon: (tabInfo) => {
-							return <Ionicons name={ 'ios-restaurant' } size={ 25 } color={ tabInfo.color }/>
-						}
+							return <Ionicons name={ 'ios-restaurant' } size={ 22 } color={ tabInfo.color }/>
+						},
+						tabBarLabelStyle: {
+							fontFamily: 'open-sans-bold'
+						},
+						tabBarLabel: <Text style={ { fontFamily: 'open-sans' } }>Meals</Text>
 					} }
 				/>
 				<BottomTab.Screen
-					name={ 'Favorites' }
+					name={ 'FavoritesTab' }
 					component={ FavoritesStackNavigator }
+					title={ 'Favorites' }
 					options={ {
 						tabBarIcon: (tabInfo) => {
-							return <Ionicons name={ 'ios-star' } size={ 25 } color={ tabInfo.color }/>
-						}
+							return <Ionicons name={ 'ios-star' } size={ 22 } color={ tabInfo.color }/>
+						},
+						tabBarLabelStyle: {
+							fontFamily: 'open-sans-bold'
+						},
+						tabBarLabel: <Text style={ { fontFamily: 'open-sans' } }>Favorites</Text>
 					} }
 				/>
 			</BottomTab.Navigator>
@@ -78,28 +96,35 @@ if ( Platform.OS === 'ios' ) {
 			<BottomTab.Navigator
 				activeColor={ 'white' }
 				shifting={ true }
-				barStyle={ {
-					backgroundColor: Colors.primaryColor
-				} }
 			>
 				<BottomTab.Screen
-					name={ 'Meals' }
+					name={ 'MealsTab' }
 					component={ MealsStackNavigator }
+					title={ 'Meals' }
 					options={ {
 						tabBarIcon: (tabInfo) => {
-							return <Ionicons name={ 'ios-restaurant' } size={ 25 } color={ tabInfo.color }/>
+							return <Ionicons name={ 'ios-restaurant' } size={ 22 } color={ tabInfo.color }/>
 						},
-						tabBarColor: Colors.primaryColor
+						tabBarLabelStyle: {
+							fontFamily: 'open-sans-bold'
+						},
+						tabBarColor: Colors.primaryColor,
+						tabBarLabel: <Text style={ { fontFamily: 'open-sans' } }>Meals</Text>
 					} }
 				/>
 				<BottomTab.Screen
-					name={ 'Favorites' }
+					name={ 'FavoritesTab' }
 					component={ FavoritesStackNavigator }
+					title={ 'Favorites' }
 					options={ {
 						tabBarIcon: (tabInfo) => {
-							return <Ionicons name={ 'ios-star' } size={ 25 } color={ tabInfo.color }/>
+							return <Ionicons name={ 'ios-star' } size={ 22 } color={ tabInfo.color }/>
 						},
-						tabBarColor: Colors.secondaryColor
+						tabBarLabelStyle: {
+							fontFamily: 'open-sans-bold',
+						},
+						tabBarColor: Colors.secondaryColor,
+						tabBarLabel: <Text style={ { fontFamily: 'open-sans' } }>Favorites</Text>
 					} }
 				/>
 			</BottomTab.Navigator>
@@ -114,6 +139,16 @@ function MealsStackNavigator() {
 			screenOptions={ {
 				headerStyle: {
 					backgroundColor: Platform.OS === 'android' ? Colors.primaryColor : '',
+				},
+				headerTitleStyle: {
+					fontFamily: 'open-sans-bold',
+				},
+				headerBackTitleStyle: {
+					fontFamily: 'open-sans'
+				},
+				contentStyle: {
+					alignContent: 'center',
+					justifyContent: 'center'
 				},
 				headerTintColor: Platform.OS === 'android' ? 'white' : Colors.primaryColor,
 				headerTitleAlign: 'center'
@@ -159,6 +194,16 @@ function FavoritesStackNavigator() {
 			screenOptions={ {
 				headerStyle: {
 					backgroundColor: Platform.OS === 'android' ? Colors.secondaryColor : ''
+				},
+				headerTitleStyle: {
+					fontFamily: 'open-sans-bold'
+				},
+				headerBackTitleStyle: {
+					fontFamily: 'open-sans'
+				},
+				contentStyle: {
+					alignContent: 'center',
+					justifyContent: 'center'
 				},
 				headerTintColor: Platform.OS === 'android' ? 'white' : Colors.secondaryColor,
 				headerTitleAlign: 'center'

@@ -15,7 +15,7 @@ const ListItem = props => {
 const MealDetailsScreen = props => {
 	useLayoutEffect(() => {
 		props.navigation.setOptions({
-			headerRight: HeaderButtonsRight
+			headerRight: () => <HeaderButtonsRight star/>
 		})
 	}, [ props.navigation ]);
 	

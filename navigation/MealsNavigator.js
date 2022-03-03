@@ -151,7 +151,6 @@ function MealsStackNavigator() {
 					justifyContent: 'center'
 				},
 				headerTintColor: Platform.OS === 'android' ? 'white' : Colors.primaryColor,
-				headerTitleAlign: 'center'
 			} }
 		>
 			<MealsStack.Screen
@@ -206,7 +205,6 @@ function FavoritesStackNavigator() {
 					justifyContent: 'center'
 				},
 				headerTintColor: Platform.OS === 'android' ? 'white' : Colors.secondaryColor,
-				headerTitleAlign: 'center'
 			} }
 		>
 			<FavoritesStack.Screen

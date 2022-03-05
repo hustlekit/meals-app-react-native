@@ -5,7 +5,6 @@ import HeaderButtonCustom from "./HeaderButtonCustom";
 import HeaderButtonStar from "./HeaderButtonStar";
 import HeaderButtonSave from "./HeaderButtonSave";
 
-
 const HeaderButtonsRight = props => {
 	return (
 		<HeaderButtons HeaderButtonComponent={ HeaderButtonCustom }>

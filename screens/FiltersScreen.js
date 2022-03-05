@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { Text, View, StyleSheet, Switch, Platform } from 'react-native';
 
 import Colors from "../constants/Colors";
@@ -22,29 +22,29 @@ const FilterSwitch = props => {
 }
 
 const FiltersScreen = props => {
-	useEffect(() => {
-		props.navigation.setOptions({
-			headerLeft: HeaderButtonsLeft,
-			// TODO pass saveFilters
-			headerRight: () => <HeaderButtonsRight save handleSave={ saveFilters }/>
-		});
-	});
-	
-	const saveFilters = () => {
-		const appliedFilters = {
-			glutenFree: isGlutenFree,
-			lactoseFree: isLactoseFree,
-			vegetarian: isVegetarian,
-			vegan: isVegan,
-		}
-		
-		console.log(appliedFilters);
-	};
+	const { navigation } = props;
 	
 	const [ isGlutenFree, setIsGlutenFree ] = useState(false);
 	const [ isLactoseFree, setIsLactoseFree ] = useState(false);
 	const [ isVegetarian, setIsVegetarian ] = useState(false);
 	const [ isVegan, setIsVegan ] = useState(false);
+	
+	useEffect(() => {
+		props.navigation.setOptions({
+			headerLeft: HeaderButtonsLeft,
+			headerRight: () => <HeaderButtonsRight save handleSave={ saveFilters }/>
+		});
+	});
+	
+	const saveFilters = useCallback(
+		() => {
+			const appliedFilters = {
+				glutenFree: isGlutenFree,
+				lactoseFree: isLactoseFree,
+				vegetarian: isVegetarian,
+				vegan: isVegan,
+			}
+		}, [isGlutenFree, isLactoseFree, isVegetarian, isVegan]);
 	
 	return (
 		<View style={ styles.root }>

@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useEffect, useState, useCallback, useLayoutEffect } from 'react';
 import { Text, View, StyleSheet, Switch, Platform } from 'react-native';
 
 import Colors from "../constants/Colors";
@@ -29,13 +29,6 @@ const FiltersScreen = props => {
 	const [ isVegetarian, setIsVegetarian ] = useState(false);
 	const [ isVegan, setIsVegan ] = useState(false);
 	
-	useEffect(() => {
-		props.navigation.setOptions({
-			headerLeft: HeaderButtonsLeft,
-			headerRight: () => <HeaderButtonsRight save handleSave={ saveFilters }/>
-		});
-	});
-	
 	const saveFilters = useCallback(
 		() => {
 			const appliedFilters = {
@@ -44,7 +37,15 @@ const FiltersScreen = props => {
 				vegetarian: isVegetarian,
 				vegan: isVegan,
 			}
-		}, [isGlutenFree, isLactoseFree, isVegetarian, isVegan]);
+			console.log(appliedFilters);
+		}, [ isGlutenFree, isLactoseFree, isVegetarian, isVegan ]);
+	
+	useLayoutEffect(() => {
+		props.navigation.setOptions({
+			headerLeft: HeaderButtonsLeft,
+			headerRight: () => <HeaderButtonsRight save handleSave={ saveFilters }/>
+		});
+	}, [ saveFilters ]);
 	
 	return (
 		<View style={ styles.root }>

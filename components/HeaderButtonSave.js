@@ -1,6 +1,5 @@
 import React from "react";
 import { Item } from "react-navigation-header-buttons";
-import { useRoute } from "@react-navigation/native";
 
 const HeaderButtonSave = props => {
 	return (

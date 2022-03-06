@@ -8,7 +8,7 @@ import HeaderButtonSave from "./HeaderButtonSave";
 const HeaderButtonsRight = props => {
 	return (
 		<HeaderButtons HeaderButtonComponent={ HeaderButtonCustom }>
-			{ props.star && <HeaderButtonStar/> }
+			{ props.star && <HeaderButtonStar toggleFavoriteHandler={ props.toggleFavoriteHandler }/> }
 			{ props.save && <HeaderButtonSave handleSave={ props.handleSave }/> }
 		</HeaderButtons>
 	)

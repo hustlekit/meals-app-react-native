@@ -1,6 +1,5 @@
 import React, { useLayoutEffect } from 'react';
-
-import { MEALS } from "../data/dummy-data";
+import { useSelector } from "react-redux";
 
 import MealList from "../components/MealList";
 import HeaderButtonsLeft from "../components/HeaderButtonsLeft";
@@ -12,7 +11,7 @@ const FavoritesScreen = props => {
         })
     }, [props.navigation]);
     
-    const favMeals = MEALS.filter(meal => meal.id === 1 || meal.id === 6);
+    const favMeals = useSelector(state => state.meals.favoriteMeals);
     
     return (
         <MealList

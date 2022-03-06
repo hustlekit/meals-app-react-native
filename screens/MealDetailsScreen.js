@@ -1,8 +1,10 @@
-import React, { useLayoutEffect } from 'react';
+import React, { useCallback, useLayoutEffect } from 'react';
 import { Text, View, ScrollView, Image, StyleSheet } from 'react-native';
+import { useDispatch } from "react-redux";
 
 import HeaderButtonsRight from "../components/HeaderButtonsRight";
 import DefaultText from "../components/DefaultText";
+import { toggleFavorite } from "../store/actions/meals";
 
 const ListItem = props => {
 	return (
@@ -13,13 +15,19 @@ const ListItem = props => {
 };
 
 const MealDetailsScreen = props => {
-	useLayoutEffect(() => {
-		props.navigation.setOptions({
-			headerRight: () => <HeaderButtonsRight star/>
-		})
-	}, [ props.navigation ]);
-	
+	const navigation = props.navigation;
 	const item = props.route.params.item;
+	const dispatch = useDispatch();
+	
+	const toggleFavoriteHandler = useCallback(() => {
+		dispatch(toggleFavorite(item.id));
+	}, [dispatch, item]);
+	
+	useLayoutEffect(() => {
+		navigation.setOptions({
+			headerRight: () => <HeaderButtonsRight star toggleFavoriteHandler={ toggleFavoriteHandler }/>
+		});
+	}, [ navigation ]);
 	
 	return (
 		<ScrollView>

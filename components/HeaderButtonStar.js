@@ -1,9 +1,9 @@
 import React from "react";
-import {  Item } from "react-navigation-header-buttons";
+import { Item } from "react-navigation-header-buttons";
 
 const HeaderButtonStar = props => {
 	return (
-		<Item title={ 'Favorite' } iconName={ 'ios-star' } onPress={ () => console.log('Favorites') }/>
+		<Item title={ 'Favorite' } iconName={ 'ios-star' } onPress={ props.toggleFavoriteHandler }/>
 	)
 };
 
